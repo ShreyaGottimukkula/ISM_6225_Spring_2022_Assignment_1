@@ -12,16 +12,17 @@ namespace DIS_Assignmnet1_SPRING_2022
     {
         static void Main(string[] args)
         {
+
             //Question 1
             Console.WriteLine("Q1: Enter the string:");
             string s = Console.ReadLine();
             string final_string = RemoveVowels(s);
-            Console.WriteLine("Final string after removing the Vowels: {0}",final_string);
+            Console.WriteLine("Final string after removing the Vowels: {0}", final_string);
             Console.WriteLine();
 
             //Question 2:
-            string[] bulls_string1 = new string[]{"Marshall", "Student","Center"};
-            string[] bulls_string2 = new string[]{"MarshallStudent", "Center"};
+            string[] bulls_string1 = new string[] { "Marshall", "Student", "Center" };
+            string[] bulls_string2 = new string[] { "MarshallStudent", "Center" };
             bool flag = ArrayStringsAreEqual(bulls_string1, bulls_string2);
             Console.WriteLine("Q2");
             if (flag)
@@ -34,11 +35,12 @@ namespace DIS_Assignmnet1_SPRING_2022
             }
             Console.WriteLine();
 
+
             //Question 3:
             int[] bull_bucks = new int[] { 1, 2, 3, 2 };
             int unique_sum = SumOfUnique(bull_bucks);
             Console.WriteLine("Q3:");
-            Console.WriteLine("Sum of Unique Elements in the array are :{0}", unique_sum);
+            Console.WriteLine("Sum of Unique Elements in the array are {0}:" + unique_sum);
             Console.WriteLine();
 
 
@@ -46,24 +48,28 @@ namespace DIS_Assignmnet1_SPRING_2022
             int[,] bulls_grid = new int[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
             Console.WriteLine("Q4:");
             int diagSum = DiagonalSum(bulls_grid);
-            Console.WriteLine("The sum of diagonal elements in the bulls grid is {0}:", diagSum);
+            Console.WriteLine("The sum of diagonal elements in the bulls grid is {0}:" + diagSum);
             Console.WriteLine();
+
 
             //Question 5:
             Console.WriteLine("Q5:");
             String bulls_string = "aiohn";
             int[] indices = { 3, 1, 4, 2, 0 };
             String rotated_string = RestoreString(bulls_string, indices);
-            Console.WriteLine("The  Final string after rotation is ", rotated_string);
+            Console.WriteLine("The  Final string after rotation is: " + rotated_string);
             Console.WriteLine();
+
 
             //Quesiton 6:
             string bulls_string6 = "mumacollegeofbusiness";
-            char ch ='c';
+            char ch = 'c';
             string reversed_string = ReversePrefix(bulls_string6, ch);
             Console.WriteLine("Q6:");
             Console.WriteLine("Resultant string are reversing the prefix:{0}", reversed_string);
-            Console.WriteLine();
+            Console.WriteLine()
+
+            ;
 
         }
 
@@ -85,13 +91,25 @@ namespace DIS_Assignmnet1_SPRING_2022
         </summary>
         */
 
+
         private static string RemoveVowels(string s)
         {
             try
             {
-                // write your code here
-                String final_string ="";
-                return final_string;
+
+
+
+                string final_string = "";
+                foreach (char ch in s)
+                {
+                    if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u'
+                        || ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')// trying to compare every character ch in string S with all the vowels both upper and lower case.
+                        continue;// if matched eliminating the char from final string by continueing with the flow.
+                    else
+                        // if not , adding the char to final string resulting in a vowel less string.
+                        final_string = final_string + ch.ToString();
+                }
+                return final_string; //returning the final result
             }
             catch (Exception)
             {
@@ -99,6 +117,7 @@ namespace DIS_Assignmnet1_SPRING_2022
             }
 
         }
+
 
         /* 
         <summary>
@@ -125,12 +144,31 @@ namespace DIS_Assignmnet1_SPRING_2022
         {
             try
             {
-                // write your code here.
-                return false;
-            }
-            catch (Exception)
-            {
 
+                string str1 = null;
+                foreach (string ch in bulls_string1)//trying to iterate through each string in array of strings for bulls_string1.  
+
+                {
+                    str1 = str1 + ch; //Adding them and make it into one single string.
+                }
+                string str2 = null;
+                foreach (string ch in bulls_string2)//trying to iterate through each string in array of strings for bulls_string2.
+                {
+                    str2 = str2 + ch; //Adding them and make it into one single string.
+
+                }
+                str1 = str1.ToLower();// conventing str1 to lowercase.
+                str2 = str2.ToLower();// conventing str2 to lowercase.
+                if (str1 == str2)  // comparing both of these strings to see if they match.
+                    return true;// returning true if matched.
+                else
+                    return false;// returning false if not.
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
                 throw;
             }
 
@@ -158,12 +196,30 @@ namespace DIS_Assignmnet1_SPRING_2022
         {
             try
             {
-                // write your code here
-                return 0;
+
+
+                //if 
+
+                int[] str = bull_bucks;
+                int total = 0;
+                foreach (int x in bull_bucks) //using nested loop to compare each elemet in the array with itself .
+                {
+                    int count = 0;
+                    foreach (int y in str)//nested loop to see  if there are any repetions of the element more than once.
+                    {
+                        if (x == y)//comparing to see if a match has made .
+                            count = count + 1;//maintainded a count of that element.
+                    }
+                    if (count < 2) // if the count is less than 1 , it is consdered as  unique.
+                        total = total + x; // and sum of all such unique elements is calculated.
+                }
+
+                return total;
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 throw;
             }
         }
@@ -192,9 +248,24 @@ namespace DIS_Assignmnet1_SPRING_2022
         {
             try
             {
-                // write your code here.
+                int res = 0;
+                int len = bulls_grid.GetLength(1);
+                for (int i = 0; i < len; i++)
+                {
+                    for (int j = 0; j < len; j++) // using nested loops asits a 2Dimentional array.
+                    {
+                        if (i == j) // condition for finding primary digonal elements 
+                            res = res + bulls_grid[i, j]; // finding sum of primary daigonal elements.
+                        if (i + j == len - 1) // condition for finding secondary digonal elements.
+                            res = res + bulls_grid[i, j]; // finding sum ofsecondary daigonal elements.
 
-                return 0;
+                    }
+                }
+                if (len % 2 != 0) // condition to check if the size of 2D array is odd or even  
+                    res = res - bulls_grid[len / 2, len / 2]; //if size is  odd , Middle most element will be added twice from above code ,hence  subtrating it once to get desired result.
+
+
+                return res; //returning the final  result.
             }
             catch (Exception e)
             {
@@ -224,8 +295,20 @@ namespace DIS_Assignmnet1_SPRING_2022
         {
             try
             {
-                // write your code here.
-                return "null";
+
+                if (bulls_string is not null && indices is not null && bulls_string.Length == indices.Length)
+                {
+                    int length = bulls_string.Length; // finding length of input string.
+                    char[] new_array = new char[length]; // new char array for output storage.
+                    for (int j = 0; j < length; j++) // running loop to find the matching  position for each  element of input string.
+                    {
+                        new_array[indices[j]] = bulls_string[j];// trying to place each char in bulls_string to in the position of each element in indices.
+                    }
+                    return new string(new_array);
+                }
+
+                return bulls_string;// if input is  null returning the same.
+
             }
             catch (Exception e)
             {
@@ -264,12 +347,38 @@ namespace DIS_Assignmnet1_SPRING_2022
         {
             try
             {
-                String prefix_string ="";
+
+
+                String prefix_string = "";
+                int count = 0;
+                int i = 0;
+                foreach (char e in bulls_string6) // using loop to indentidy the first occurence of the given character.
+                {
+
+                    if (ch == e && count < 1)
+                    {
+                        count = count + 1;
+                        i = bulls_string6.IndexOf(e);// when matched, finding the position of the char.
+                    }
+
+
+                }
+                for (int j = i; j >= 0; j--)// iterating backwards from the position of the first match.
+                {
+                    prefix_string = prefix_string + bulls_string6[j]; // reversing the string from the postion i to start.
+
+                }
+                for (int k = i + 1; k < bulls_string6.Length; k++) //iterationg from the position  i to the end of string.
+                {
+                    prefix_string = prefix_string + bulls_string6[k]; // adding the rest of the string as it is to the reverse string to obtain the whole result.
+
+                }
+
                 return prefix_string;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e.Message);
                 throw;
             }
 
